@@ -6,6 +6,16 @@ app.use(express.json());
 const SECRET =""
 const PORT = 8080;
 //Autenticação TOKEN
+
+const usuario = []
+const gastos = []
+
+function gerarToken(usuario){
+    return jwt.sign({id: usuario.id, email: usuario.email}, SECRET, {
+        expiresIn: "1h"
+    })
+}
+
 function autenticarToken(req, res, next){
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1];
@@ -17,6 +27,8 @@ function autenticarToken(req, res, next){
         next()
     })
 }
+
+// Pesquisa: como funciona a estrutura de um token jwt; Header(cabeçalho), paylead(corpo do token), signature(assinatura) //
 
 let users = [];
 let presenca = [];
